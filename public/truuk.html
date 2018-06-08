@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Truuk</title>
+    <style type="text/css">
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .parallax {
+            width: 100%;
+            height: 100vh;
+            background-image: url(watchmen.jpg);
+            background-size: cover;
+            text-align: center;
+            font-size: 30px;
+            position: relative;
+        }
+
+        span {
+            text-shadow: 0 0 20px blue;
+            font-size: 100px;
+        }
+
+        .span2 {
+            position: absolute;
+            top:0;
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <section class="parallax" style="background-color: red;">
+        <span class="span1">Bla</span>
+    </section>
+    <section class="parallax" style="background-color: green;">
+        <span class="span2">text2</span>
+    </section>
+    <section class="parallax" style="background-color: blue;">
+
+    </section>
+    <script>
+  document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+  ':35729/livereload.js?snipver=1"></' + 'script>')
+</script>
+</body>
+</html>
