@@ -22,9 +22,60 @@
         dd($e->getMessage());
     }
 
-  
-?>
+   /* Dit stuk nog verplaatsen*/
+  	if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
+	   $variables = [
+	       'email' => ['required', 'email', 'min:7', 'max:155'],
+	       'password' => ['required', 'min:8', 'max:100', 'confirmed'],
+	       'first_name' => ['required', 'name', 'min:2', 'max:50'],
+	       'suffix_name' => ['min:1', 'max:15', 'name'],
+	       'last_name' => ['required', 'name', 'min:2', 'max:50'],
+	       'country' => ['min:2', 'max:15', 'name'],
+	       'city' => ['required', 'min:2', 'max:55', 'name'],
+	       'street' => ['required', 'min:2', 'max:85', 'name'],
+	       'street_number' => ['required', 'min:1', 'max:5'],
+	       'street_suffix' => ['min:1', 'max:25'],
+	       'zipcode' => ['required', 'postcode', 'min:6', 'max:7'],
+	   ];
+
+	   require '../../app/validation/validations.php';
+
+	   if(count($errors) == 0) {
+	       require '../../app/payment/new.php';
+	   }
+
+	   dd('Joepie! We kunnen betalen!');
+
+	/*
+	   $webhookUrl = (router()->domainName == 'localhost') ? 'https://686079cb.ngrok.io/webshop/public/pay/webhook/'.$orderId : router()->name('pay.webhook', ['orderId' => $orderId]);
+
+	       $mollie = new \Mollie\Api\MollieApiClient();
+	       $mollie->setApiKey('test_ERVdf4R9tBQwyfAmEbcvpNn2R45fwJ'); // test api key
+
+	       // create a mollie api v2 payment: https://github.com/mollie/mollie-api-php
+	       $payment = $mollie->payments->create([
+	           "amount" => [
+	               "currency" => "EUR",
+	               "value" => (string)$_SESSION['cart']['total']
+	           ],
+	           "description" => "Bedankt voor uw aankoop bij MyBikeShop.nl!",
+	           "redirectUrl" => router()->name('pay.done', ['orderId' => $orderId]),
+	           "webhookUrl"  => $webhookUrl,
+	           'metadata' => $orderId, // send along the order id
+	       ]);
+	 */
+
+	}
+
+	function value($key)
+	{
+		return @$_POST[$key];
+	}
+
+	/*tot hier*/
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -37,18 +88,20 @@
 	<body>
 		<section id="home">
 			<ul id="list">
-				<li id="list"><a href="#home">Home</a></li>
+				<li id="list"><a href="index.php">Home</a></li>
 				<li id="list"><a href="product.php">Products</a></li>
-				<li id="list"><a href=#shoppingcart>Shoppingcart</a></li>
+				<li id="list"><a href="shoppingcart.php">Shoppingcart</a></li>
 			</ul>
 
 			<?php foreach($products as $product) { ?>
 			<div style="clear:both;" class="product">
 				<h1><?php echo $product['title']; ?></h1>
-				<img src="images/<?php echo $product['image']; ?>" style="float: left; padding-right: 20px;">
-				<div style="height: 150px;">
-					<button type="button" class="btn btn-warning add-to-cart" data-url="cart/add.php?id=<?php echo $product['id']; ?>">Add to shoppingcart
-					</button>
+				<a href="<?php echo asset('product/'.$product['slug']); ?>">
+					<img src="<?php echo asset('images/'.$product['image']); ?>" style="float: left; padding-right: 20px;">
+				</a>
+				<div style="height: 100px;">
+					<a href="shoppingcart.php"><button type="button" class="btn btn-warning add-to-cart" data-url="cart/add.php?id=<?php echo $product['id']; ?>">Add to shoppingcart
+					</button></a>
 				</div>
 
 			</div>
@@ -69,6 +122,7 @@
 		<aside class="bucket" id="bucket">
 			<?php include "partials/bucket.php"; ?>
 		</aside>
+
 		
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -103,13 +157,8 @@
 			    });
 			}
 		</script>
-		<script>
+	<!-- 	<script>
 			  document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-		</script>
-
-		<button type="button" class="btn btn-success btn-xs add-to-cart" data-url="<?php echo asset('cart/add.php?id='.$item['id']); ?>">+</button>
-		
-		<button type="button" class="btn btn-danger btn-xs remove-from-cart" data-url="<?php echo asset('cart/remove.php?id='.$item['id']); ?>">-</button>
-
+		</script> -->
 	</body>
 </html>

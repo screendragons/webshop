@@ -3,6 +3,9 @@
 session_start();
 
 require 'classes/Cart.php';
+require 'classes/Http.php';
+
+Http::boot();
 
 if (! isset($_SESSION['cart'])) {
    Cart::reset();
@@ -36,4 +39,10 @@ function dd($text)
     else {
         die($text);
     }
+}
+
+
+function asset($path)
+{
+    return Http::webroot().$path;
 }

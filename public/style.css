@@ -37,8 +37,8 @@ h1 {
 }
 
 .column {
-    float: left;
-    width: 50%;
+  float: right;
+  width: 50%;
 }
 
 .product {
@@ -83,4 +83,8 @@ h1 {
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+.oneline {
+  white-space: nowrap;
+  overflow: hidden;
 }
